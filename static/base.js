@@ -34,6 +34,7 @@ $(document).ready(function(){
 });
 
 function addAlertMessage(msg = 'Tap 🡰 to select a suggested word. If you wish to try your word, please type it below.  Tap a tile to change its colour.') {
+    $(alertMessageArea).empty();
     $(alertMessageArea).append(`
     <div class="row justify-content-center mt-2 mb-3">
         <div class="col-10 col-md-6">
@@ -192,10 +193,10 @@ function searchWords() {
     .then(res => (res.json()))
     .then(data => {
         $(suggestionArea).empty();
+        if(data.message)
+            return addAlertMessage(data.message);
         if(data.words.length===0)
             return addAlertMessage('No result found');
-        else if(data.message)
-            return addAlertMessage(data.message);
         updateSuggestions(data.words);
     })
     .catch(err=>{
