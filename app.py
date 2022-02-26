@@ -15,7 +15,9 @@ def suggestion_route():
     words = get_suggestion(dictionary, data["words"], data["word_length"])
     if(len(words)==1):
         for word in data["words"]:
-            if word==words[0]:
-                return jsonify({"success":"Contrats! you found it"})
+            if word[0]==words[0]:
+                return jsonify({"message":"Contrats! you found it"})
     return jsonify({"words":words})
 
+if __name__ == '__main__':
+    app.run(debug=True)

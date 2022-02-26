@@ -1,3 +1,5 @@
+from os import listdir
+from os.path import isfile, join
 
 class Word:
     def __init__(self, word):
@@ -12,8 +14,11 @@ def load_words_file(filename):
     input_file = open(filename)
     return input_file.readlines()
 
-def get_dictionary(filename='english_words_full.txt'):
-    words = load_words_file(filename)
+def get_dictionary(root_dir = './dictionary'):
+    words = set()
+    for filename in listdir(root_dir):
+        words = words.union( load_words_file(join(root_dir, filename)) )
+    print(len(words))
     words_array = [ Word(word) for word in words ]
     words_array.sort(reverse=True)
     words_by_length = { }
